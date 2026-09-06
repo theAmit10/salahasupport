@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salaha Support</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --base:#e9e6df;
+    --base-light:#f6f4ee;
+    --shadow-light:#ffffff;
+    --shadow-dark:#c7c2b6;
+    --ink:#2c2a24;
+    --ink-soft:#6d6a5f;
+    --teal:#1f6f5c;
+    --teal-dim:#3d8672;
+    --gold:#b08a4e;
+    --line: rgba(44,42,36,0.08);
+    --radius: 22px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--base);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  a{color:var(--teal);}
+  .wrap{
+    max-width:840px;
+    margin:0 auto;
+    padding:0 24px 100px;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    padding:64px 0 40px;
+  }
+  .mark{
+    width:56px;height:56px;
+    border-radius:18px;
+    background:var(--base);
+    box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:28px;
+  }
+  .mark svg{width:26px;height:26px;}
+  header h1{
+    font-size:clamp(2.1rem, 5vw, 2.9rem);
+    color:var(--ink);
+    max-width:11ch;
+  }
+  header p.lede{
+    margin-top:16px;
+    max-width:46ch;
+    color:var(--ink-soft);
+    font-size:1.05rem;
+  }
+
+  /* ---------- Fact pills ---------- */
+  .facts{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:32px;
+  }
+  .fact{
+    padding:10px 18px;
+    border-radius:999px;
+    font-size:0.85rem;
+    color:var(--teal);
+    background:var(--base);
+    box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+  }
+
+  /* ---------- Section shell ---------- */
+  section{margin-top:56px;}
+  .eyebrow-row{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:20px;
+    gap:16px;
+  }
+  section h2{
+    font-size:1.5rem;
+  }
+  .section-note{
+    font-size:0.85rem;
+    color:var(--ink-soft);
+    text-align:right;
+    max-width:22ch;
+  }
+
+  /* ---------- Neumorphic panel ---------- */
+  .panel{
+    background:var(--base);
+    border-radius:var(--radius);
+    box-shadow: 10px 10px 20px var(--shadow-dark), -10px -10px 20px var(--shadow-light);
+    padding:8px;
+  }
+
+  /* ---------- FAQ items ---------- */
+  .faq-item{
+    border-radius:16px;
+    overflow:hidden;
+  }
+  .faq-item + .faq-item{ margin-top:8px; }
+  .faq-q{
+    width:100%;
+    text-align:left;
+    background:none;
+    border:none;
+    font-family:'Inter', sans-serif;
+    font-size:1rem;
+    font-weight:500;
+    color:var(--ink);
+    padding:20px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    cursor:pointer;
+  }
+  .faq-q .plus{
+    flex:0 0 auto;
+    width:30px;height:30px;
+    border-radius:10px;
+    background:var(--base);
+    box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
+    display:flex;align-items:center;justify-content:center;
+    position:relative;
+    transition:box-shadow .2s ease;
+  }
+  .faq-q .plus::before, .faq-q .plus::after{
+    content:"";
+    position:absolute;
+    background:var(--teal);
+    border-radius:2px;
+  }
+  .faq-q .plus::before{ width:12px; height:2px; }
+  .faq-q .plus::after{ width:2px; height:12px; transition:transform .25s ease; }
+  .faq-item.open .faq-q .plus::after{ transform:rotate(90deg); }
+  .faq-item.open .faq-q .plus{
+    box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
+  }
+  .faq-a{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  .faq-a-inner{
+    padding:0 20px 22px 20px;
+    color:var(--ink-soft);
+    font-size:0.95rem;
+  }
+  .faq-a-inner p{margin:0 0 10px;}
+  .faq-a-inner p:last-child{margin-bottom:0;}
+  .faq-a-inner ul{margin:8px 0 10px; padding-left:20px;}
+  .faq-a-inner li{margin-bottom:4px;}
+
+  /* ---------- Permission grid ---------- */
+  .grid2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  @media (max-width:560px){ .grid2{grid-template-columns:1fr;} }
+  .perm-card{
+    border-radius:16px;
+    background:var(--base);
+    box-shadow: 7px 7px 14px var(--shadow-dark), -7px -7px 14px var(--shadow-light);
+    padding:20px;
+  }
+  .perm-card .icon{
+    width:38px;height:38px;
+    border-radius:11px;
+    background:var(--base);
+    box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:14px;
+  }
+  .perm-card .icon svg{width:18px;height:18px;stroke:var(--teal);}
+  .perm-card h3{font-size:1rem; font-weight:500; margin-bottom:6px;}
+  .perm-card p{margin:0; font-size:0.87rem; color:var(--ink-soft);}
+  .perm-card .req{
+    display:inline-block;
+    margin-top:10px;
+    font-size:0.72rem;
+    color:var(--gold);
+    background:var(--base);
+    padding:4px 10px;
+    border-radius:999px;
+    box-shadow: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light);
+  }
+
+  /* ---------- Rights table ---------- */
+  .rights-row{
+    display:flex;
+    gap:16px;
+    padding:16px 20px;
+    align-items:flex-start;
+  }
+  .rights-row + .rights-row{ border-top:1px solid var(--line); }
+  .rights-row .who{
+    flex:0 0 128px;
+    font-size:0.85rem;
+    font-weight:600;
+    color:var(--teal-dim);
+    padding-top:2px;
+  }
+  .rights-row .what{ font-size:0.92rem; color:var(--ink-soft); }
+  .rights-row .what strong{ color:var(--ink); font-weight:500;}
+
+  /* ---------- Contact card ---------- */
+  .contact{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    padding:32px;
+    flex-wrap:wrap;
+  }
+  .contact h3{ font-size:1.25rem; margin-bottom:6px; }
+  .contact p{ margin:0; color:var(--ink-soft); font-size:0.92rem; max-width:36ch;}
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:14px 26px;
+    border-radius:14px;
+    background:var(--base);
+    color:var(--teal);
+    text-decoration:none;
+    font-weight:600;
+    font-size:0.92rem;
+    box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+    transition: box-shadow .15s ease, transform .15s ease;
+    white-space:nowrap;
+  }
+  .btn:active{
+    box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+    transform:translateY(1px);
+  }
+
+  footer{
+    margin-top:64px;
+    text-align:center;
+    color:var(--ink-soft);
+    font-size:0.8rem;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#1f6f5c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3v6"/>
+        <path d="M12 21c-4.5-2-7-5.8-7-10 0-1.2.2-2.3.6-3.3C7.4 9.6 9.9 11 12 11s4.6-1.4 6.4-3.3c.4 1 .6 2.1.6 3.3 0 4.2-2.5 8-7 10Z"/>
+      </svg>
+    </div>
+    <h1>Salaha Support</h1>
+    <p class="lede">Answers about permissions, prayer data, Period Mode, and your Salaha Plus subscription — everything here reflects how the app actually works, on your device.</p>
+    <div class="facts">
+      <span class="fact">No account required</span>
+      <span class="fact">No developer server</span>
+      <span class="fact">No cross-app tracking</span>
+      <span class="fact">Nothing sold, ever</span>
+    </div>
+  </header>
+
+  <section id="faq">
+    <div class="eyebrow-row">
+      <h2>Common questions</h2>
+      <span class="section-note">Tap a question to expand it</span>
+    </div>
+    <div class="panel">
+      <div class="faq-item open">
+        <button class="faq-q" aria-expanded="true">
+          Where is my prayer and Qibla data stored?
+          <span class="plus"></span>
+        </button>
+        <div class="faq-a" style="max-height:260px">
+          <div class="faq-a-inner">
+            <p>Everywhere except Apple's on-request geocoding, Salaha keeps everything on your iPhone. Prayer records, devotional counts, calculation settings, and blocking selections never leave the device — there's no Codethenic server for them to travel to.</p>
+            <p>Deleting the app deletes this data permanently, aside from anything captured in your own encrypted device backup.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Why does Salaha ask for my location?
+          <span class="plus"></span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            <p>Location is used only to calculate accurate prayer times, the Qibla direction, and your time zone. The calculation itself happens on-device — the only thing sent anywhere is a coordinate or typed city name to Apple's geocoding service, purely to resolve a place name.</p>
+            <p>If you'd rather not share it, decline the permission. Salaha defaults to Makkah and lets you search for a city manually instead.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What does Period Mode do with my health data?
+          <span class="plus"></span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            <p>When you turn it on, Salaha pauses streak penalties, reminders, and app blocking for the dates you set. That on/off status and its dates are stored on-device only, used for nothing else, and never transmitted anywhere.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Does Salaha see which apps I block or how I use my phone?
+          <span class="plus"></span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            <p>No. Blocking is handled entirely by Apple's Screen Time framework and a local system extension talking to your device only. Salaha receives no usage history, duration, or activity data back from iOS — it can enforce the schedule you set, but it can't watch how you use your phone.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What does the analytics you collect actually contain?
+          <span class="plus"></span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            <p>Very little, and none of it identifies you. Salaha has no login, so there's no profile to attach data to. We only see anonymous counts: whether the app was opened and onboarding completed, and how the subscription screen performed (shown, dismissed, purchased, restored).</p>
+            <p>Your name, location, prayer records, and onboarding answers are never included. Using the app offline stops these events from sending at all.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          I subscribed to Salaha Plus — what data does that involve?
+          <span class="plus"></span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            <p>Only what's needed to unlock the features you paid for: your transaction confirmation and subscription status, shared with the Apple App Store and our subscription provider, RevenueCat, strictly for receipt verification.</p>
+            <p>None of your location, prayer, onboarding, or health-related data is ever part of that exchange.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          How do I delete my data or onboarding answers?
+          <span class="plus"></span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            <p>Use the in-app reset or clear option where available, or simply delete the app — since nothing is mirrored on a server, this removes everything stored locally. For help with onboarding answers specifically, you can also write to us and we'll walk you through it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="permissions">
+    <div class="eyebrow-row">
+      <h2>Permissions, plainly</h2>
+      <span class="section-note">All four are optional</span>
+    </div>
+    <div class="grid2">
+      <div class="perm-card">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12Z"/><circle cx="12" cy="9" r="2.4"/></svg>
+        </div>
+        <h3>Location</h3>
+        <p>Powers prayer times and the Qibla compass. Skip it and search for a city instead.</p>
+        <span class="req">Not required</span>
+      </div>
+      <div class="perm-card">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 12 16 9"/></svg>
+        </div>
+        <h3>Motion &amp; Fitness</h3>
+        <p>Detects when your phone isn't held flat, for a steadier compass reading.</p>
+        <span class="req">Not required</span>
+      </div>
+      <div class="perm-card">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+        </div>
+        <h3>Notifications</h3>
+        <p>Schedules prayer reminders locally. In-app prayer times still work without it.</p>
+        <span class="req">Not required</span>
+      </div>
+      <div class="perm-card">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9z"/></svg>
+        </div>
+        <h3>Screen Time</h3>
+        <p>Lets you block chosen apps until a prayer is confirmed. Fully usable without it.</p>
+        <span class="req">Not required</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="rights">
+    <div class="eyebrow-row">
+      <h2>Your rights, by region</h2>
+      <span class="section-note">Most are exercised in-app</span>
+    </div>
+    <div class="panel">
+      <div class="rights-row">
+        <span class="who">EEA / UK / Switzerland</span>
+        <span class="what"><strong>Access, correct, delete, restrict, port, or object</strong> to how your data is used, and withdraw consent at any time by revoking a permission in iOS Settings.</span>
+      </div>
+      <div class="rights-row">
+        <span class="who">California</span>
+        <span class="what"><strong>Know, delete, correct, and limit</strong> use of sensitive data. There's nothing to opt out of for sale or sharing — Salaha does neither.</span>
+      </div>
+      <div class="rights-row">
+        <span class="who">Everyone else</span>
+        <span class="what"><strong>Full local control</strong> — view and edit everything in Settings, Analytics, City Search, or Onboarding, no account needed.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="panel">
+      <div class="contact">
+        <div>
+          <h3>Still need help?</h3>
+          <p>Write to us directly — we read every message and reply within the timeframe the law requires, usually much sooner.</p>
+        </div>
+        <a class="btn" href="mailto:codethenic@gmail.com">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1f6f5c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+          codethenic@gmail.com
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Salaha is built by Codethenic. Last updated September 6, 2026.
+  </footer>
+
+</div>
+
+<script>
+  document.querySelectorAll('.faq-item').forEach(function(item){
+    const btn = item.querySelector('.faq-q');
+    const ans = item.querySelector('.faq-a');
+    btn.addEventListener('click', function(){
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(openItem){
+        if(openItem !== item){
+          openItem.classList.remove('open');
+          openItem.querySelector('.faq-q').setAttribute('aria-expanded','false');
+          openItem.querySelector('.faq-a').style.maxHeight = null;
+        }
+      });
+      if(isOpen){
+        item.classList.remove('open');
+        btn.setAttribute('aria-expanded','false');
+        ans.style.maxHeight = null;
+      } else {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded','true');
+        ans.style.maxHeight = ans.scrollHeight + 'px';
+      }
+    });
+  });
+</script>
+</body>
+</html>
